@@ -14,7 +14,7 @@ namespace Meridianitinc_Assessment.Helpers
 
             var hash = sha.ComputeHash(bytes);
 
-            return Convert.ToHexString(hash);
+            return Convert.ToHexString(hash).ToLower();
         }
     }
 }
