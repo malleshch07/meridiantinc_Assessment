@@ -8,3 +8,15 @@ namespace Meridianitinc_Assessment
     {
     }
 }
+
+
+{
+  "valid_types": [
+    "content_hash",
+    "decrypted_hash",
+    "analysis",
+    "repo",
+    "transcript",
+    "algorithm_answer"
+  ]
+}

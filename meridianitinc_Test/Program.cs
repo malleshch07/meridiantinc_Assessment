@@ -2,7 +2,10 @@
 using Meridianitinc_Assessment.Services;
 using Microsoft.Extensions.Configuration;
 using System.Buffers.Text;
+using System.IO;
 using System.Net.Http.Headers;
+using System.Text;
+
 
 namespace meridiantinc_Assessment
 {
@@ -26,9 +29,44 @@ namespace meridiantinc_Assessment
             Console.WriteLine($"BaseUrl: {baseUrl}");
             Console.WriteLine("Assessment client ready.");
 
-            var response = await apiService.GetAsync($"{baseUrl}/");
+            Console.WriteLine($"BaseUrl: {baseUrl}");
+            Console.WriteLine("Assessment client ready.");
+
+            // Batch endpoint
+            var response = await apiService.GetAsync(
+                $"{baseUrl}/api/v1/dataset?batch=true&range=0-99");
 
             await ConsoleHelper.PrintResponse(response);
+
+            //        var response = await apiService.GetAsync(
+            //$"{baseUrl}/api/v1/stats");
+
+
+            //await ConsoleHelper.PrintResponse(response);
+
+
+            //links used
+            //        var response = await apiService.GetAsync(
+            //$"{baseUrl}/api/v1/stats");
+            //          var response = await apiService.GetAsync(
+            //$"{baseUrl}/api/v1/dataset?batch=true&range=0-99");
+
+            //          var submitResponse = await httpClient.PostAsync(
+            //$"{baseUrl}/api/v1/submit",
+            //new StringContent(
+            //    """
+            //      {
+            //          "type":"test",
+            //          "value":"test"
+            //      }
+            //      """,
+            //    Encoding.UTF8,
+            //    "application/json"));
+
+            //var challengeResponse = await httpClient.PostAsync(
+            //  $"{baseUrl}/api/v1/challenges",
+            //  new StringContent("{}", Encoding.UTF8, "application/json"));
+
         }
     }
 }
