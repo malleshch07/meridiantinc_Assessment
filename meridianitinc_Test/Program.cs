@@ -28,6 +28,9 @@ namespace meridiantinc_Assessment
             var baseUrl = config["BaseUrl"];
             Console.WriteLine($"BaseUrl: {baseUrl}");
             // ADD THE LOOP HERE
+            Directory.CreateDirectory(
+    @"C:\Users\malle\source\repos\meridianitinc_Test\meridianitinc_Test\Data");
+           
             for (int start = 0; start < 500; start += 100)
             {
                 int end = start + 99;
@@ -39,12 +42,50 @@ namespace meridiantinc_Assessment
 
                 var content = await response.Content.ReadAsStringAsync();
 
-                var fileName = $"batch-{start}-{end}.json";
+                var fileName =
+      $@"C:\Users\malle\source\repos\meridianitinc_Test\meridianitinc_Test\Data\batch-{start}-{end}.json";
 
                 await File.WriteAllTextAsync(fileName, content);
 
                 Console.WriteLine($"Saved {fileName}");
+                Console.WriteLine(Path.GetFullPath(fileName));
             }
+
+            Console.WriteLine("\nSearching for key endpoint...");
+
+            string[] endpoints =
+            {
+    "/",
+    "/api/v1",
+    "/swagger",
+    "/swagger/index.html",
+    "/openapi.json",
+    "/robots.txt"
+};
+
+            foreach (var ep in endpoints)
+            {
+                try
+                {
+                    Console.WriteLine($"\nTesting {ep}");
+
+                    var response = await httpClient.GetAsync(ep);
+
+                    Console.WriteLine($"Status: {response.StatusCode}");
+
+                    var body = await response.Content.ReadAsStringAsync();
+
+                    Console.WriteLine(body);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+
+
+
 
             //        var response = await apiService.GetAsync(
             //$"{baseUrl}/api/v1/stats");
