@@ -270,17 +270,17 @@ namespace Meridianitinc_Assessment
 
 
 
-            //var payload = new
-            //{
-            //    type = "content_hash",
-            //    value = "48b0077aeec0be19835c56cf3315085606e94a1a6229760efe90b5324c1fc10a"
-            //};
+            var payload = new
+            {
+                type = "repo",
+                value = "https://github.com/malleshch07/meridiantinc_Assessment"
+            };
 
-            //var response = await apiService.PostAsync(
-            //    $"{baseUrl}/api/v1/submit",
-            //    payload);
+            var responsea = await apiService.PostAsync(
+                $"{baseUrl}/api/v1/submit",
+                payload);
 
-            //await ConsoleHelper.PrintResponse(response);
+            await ConsoleHelper.PrintResponse(responsea);
 
 
             //        var response = await apiService.GetAsync(
