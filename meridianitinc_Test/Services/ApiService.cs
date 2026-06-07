@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http.Json;
 using System.Text;
+using System.Net.Http.Headers;
 
 namespace Meridianitinc_Assessment.Services
 {
@@ -13,12 +15,14 @@ namespace Meridianitinc_Assessment.Services
             _client = client;
         }
 
-        public async Task<string> GetAsync(string endpoint)
+        public async Task<HttpResponseMessage> GetAsync(string endpoint)
         {
-            var response = await _client.GetAsync(endpoint);
-            response.EnsureSuccessStatusCode();
+            return await _client.GetAsync(endpoint);
+        }
 
-            return await response.Content.ReadAsStringAsync();
+        public async Task<HttpResponseMessage> PostAsync(string endpoint, object request)
+        {
+            return await _client.PostAsJsonAsync(endpoint, request);
         }
     }
 }

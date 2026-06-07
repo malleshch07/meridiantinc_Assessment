@@ -1,5 +1,7 @@
-﻿using Meridianitinc_Assessment.Services;
+﻿using Meridianitinc_Assessment.Helpers;
+using Meridianitinc_Assessment.Services;
 using Microsoft.Extensions.Configuration;
+using System.Buffers.Text;
 using System.Net.Http.Headers;
 
 namespace meridiantinc_Assessment
@@ -8,10 +10,9 @@ namespace meridiantinc_Assessment
     {
         static async Task Main(string[] args)
         {
-            var builder = new ConfigurationBuilder()
-    .AddJsonFile("appsettings.json");
-
-            var config = builder.Build();
+            var config = new ConfigurationBuilder()
+     .AddJsonFile("appsettings.json")
+     .Build();
 
             var httpClient = new HttpClient();
 
@@ -21,11 +22,13 @@ namespace meridiantinc_Assessment
                     config["ApiKey"]);
 
             var apiService = new ApiService(httpClient);
+            var baseUrl = config["BaseUrl"];
+            Console.WriteLine($"BaseUrl: {baseUrl}");
+            Console.WriteLine("Assessment client ready.");
 
-            var result = await apiService.GetAsync(
-    "https://ca-seassessment-api-dev.happywater-190f264d.northcentralus.azurecontainerapps.io/api/v1/health");
+            var response = await apiService.GetAsync($"{baseUrl}/");
 
-            Console.WriteLine(result);
+            await ConsoleHelper.PrintResponse(response);
         }
     }
 }
