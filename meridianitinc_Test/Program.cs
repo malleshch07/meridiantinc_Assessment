@@ -27,16 +27,24 @@ namespace meridiantinc_Assessment
             var apiService = new ApiService(httpClient);
             var baseUrl = config["BaseUrl"];
             Console.WriteLine($"BaseUrl: {baseUrl}");
-            Console.WriteLine("Assessment client ready.");
+            // ADD THE LOOP HERE
+            for (int start = 0; start < 500; start += 100)
+            {
+                int end = start + 99;
 
-            Console.WriteLine($"BaseUrl: {baseUrl}");
-            Console.WriteLine("Assessment client ready.");
+                Console.WriteLine($"Downloading {start}-{end}");
 
-            // Batch endpoint
-            var response = await apiService.GetAsync(
-                $"{baseUrl}/api/v1/dataset?batch=true&range=0-99");
+                var response = await apiService.GetAsync(
+                    $"{baseUrl}/api/v1/dataset?batch=true&range={start}-{end}");
 
-            await ConsoleHelper.PrintResponse(response);
+                var content = await response.Content.ReadAsStringAsync();
+
+                var fileName = $"batch-{start}-{end}.json";
+
+                await File.WriteAllTextAsync(fileName, content);
+
+                Console.WriteLine($"Saved {fileName}");
+            }
 
             //        var response = await apiService.GetAsync(
             //$"{baseUrl}/api/v1/stats");
